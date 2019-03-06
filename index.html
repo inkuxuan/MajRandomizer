@@ -45,6 +45,10 @@
 				        data-toggle="modal" data-target="#stockModal">
 					查看库存
 				</button>
+				<button class="btn btn-light"
+				        data-toggle="modal" data-target="#infoModal">
+					帮助
+				</button>
 			</div>
 		</div>
 		<button id="draw_button" onclick="draw()"
@@ -98,6 +102,55 @@
 	</div>
 </div>
 
+<div class="modal fade" id="infoModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<h4 class="modal-title">帮助</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<p>第一次打开本工具时，这个帮助信息会自动弹出</p>
+				<h3>基本描述</h3>
+				<p>本工具为静态页面，初始的奖品信息保存在
+					<span class="text-primary">explanations.js</span>，您可以根据实际情况修改此文件</p>
+				<h3>自定义奖品</h3>
+				<p>使用在线托管服务时，您可能无法直接更改此文件，此时您可以使用浏览器调试台的
+					<span class="text-primary">localStorage</span>中的
+					<span class="text-primary">explanations</span>项（您可自行创建），以相同格式保存奖品信息</p>
+				<p>请留意
+					<button class="btn btn-danger">复位库存</button>
+					按钮将会使您本地存储的商品信息清空，从而重新使用
+					<span class="text-primary">explanations.js</span>，因此上述情况
+					<span class="text-danger">请不要使用</span>"复位库存"功能</p>
+				<h3>本地存储</h3>
+				<p>每一次抽奖造成的库存变化都会保存在
+					<span class="text-primary">localStorage</span>中的
+					<span class="text-primary">explanations</span>项。点击
+					<button class="btn btn-danger">复位库存</button>
+					按钮将会清除保存的数据，从而恢复原本在
+					<span class="text-primary">explanations.js</span>
+					的奖品信息
+				</p>
+				<h3>小功能</h3>
+				<p><strong>调试模式</strong>勾选时，抽奖并不会影响库存，可用于测试</p>
+				<p><strong>输出有序结果</strong>勾选时，同一个奖品将会被排序在一起</p>
+
+			</div>
+
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <script src="explanations.js"></script>
 
 <script>
@@ -110,6 +163,12 @@
     let t_explanations = localStorage.getItem("explanations");
     if (t_explanations != null && t_explanations !== "") {
         explanations = JSON.parse(t_explanations);
+    }
+
+    //弹出帮助
+    if(localStorage.getItem("first")!="false") {
+        $("#infoModal").modal("show");
+        localStorage.setItem("first", "false");
     }
 
     function draw() {
