@@ -26,8 +26,6 @@
 <div class="jumbotron text-center">
     <h1 class="display-3">闷声抽大奖</h1>
 </div>
-<!--<div class="row">-->
-<!--<div class="m-auto">-->
 <div class="card m-3">
     <div class="card-header">
         <h4 class="card-title">配置</h4>
@@ -36,12 +34,13 @@
         <div class="row">
             <div class="col-lg-2">
                 <label for="draw_amount">抽选数量</label>
-                <input id="draw_amount" type="number" step="1" style="width: 5rem;">
+                <input id="draw_amount" type="number" step="1" value="10"
+                       style="width: 5rem;">
             </div>
             <div class="col-lg-6">
                 <input id="allow_repetition" type="checkbox">
                 <label for="allow_repetition">允许重复</label>
-                <input id="sort" type="checkbox">
+                <input id="sort" type="checkbox" checked>
                 <label for="sort">输出有序结果</label>
             </div>
         </div>
@@ -50,8 +49,12 @@
         </button>
     </div>
 </div>
-<!--</div>-->
-<!--</div>-->
+
+<div id="on_change_alert" class="alert alert-warning alert-dismissible fade hide m-3">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>注意!</strong> 自变更设置后您还未进行抽选。
+</div>
+
 <div class="card bg-dark text-white m-3">
     <div class="card-header">
         <h4 class="card-title">抽选</h4>
@@ -115,6 +118,7 @@
         });
 
         $("#draw_result").html(html);
+        confChanged(false);
     }
 
     function insertRandomNumber(allow_repetition) {
@@ -155,6 +159,23 @@
         });
         return phrase;
     }
+
+    function confChanged(flag){
+        let alert = $("#on_change_alert");
+        if(flag){
+            alert.removeClass("hide");
+            alert.addClass("show");
+        } else {
+            alert.removeClass("show");
+            alert.addClass("hide");
+        }
+    }
+
+    $(document).ready(function () {
+        $("input").on("change", function () {
+            confChanged(true);
+        });
+    });
 </script>
 
 </body>
