@@ -121,7 +121,16 @@
 				<h3>自定义奖品</h3>
 				<p>使用在线托管服务时，您可能无法直接更改此文件，此时您可以使用浏览器调试台的
 					<span class="text-primary">localStorage</span>中的
-					<span class="text-primary">explanations</span>项（您可自行创建），以相同格式保存奖品信息</p>
+					<span class="text-primary">explanations</span>项（您可自行创建），以JSON数组格式保存奖品信息</p>
+				<p>例:</p>
+				<blockquote>
+					<pre>[
+    {
+        description:"奖品描述",
+        stock: 0, //初始库存
+    }
+]</pre>
+				</blockquote>
 				<p>请留意
 					<button class="btn btn-danger">复位库存</button>
 					按钮将会使您本地存储的商品信息清空，从而重新使用
@@ -180,6 +189,7 @@
             return;
         }
         let do_sort = $("#sort").is(":checked");
+        do_not_decrease = $("#do_not_decrease").is(":checked");
 
         //检查库存
         let total_stock = getTotalStock();
