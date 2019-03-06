@@ -32,12 +32,18 @@
         <h4 class="card-title">配置</h4>
     </div>
     <div class="card-body">
-        <label for="draw_amount">抽选数量</label>
-        <input id="draw_amount" type="number" step="1" style="width: 5rem;">
-        <input id="allow_repetition" type="checkbox">
-        <label for="allow_repetition">允许重复</label>
-        <input id="sort" type="checkbox">
-        <label for="sort">输出有序结果</label>
+        <div class="row">
+            <div class="col-lg-2">
+                <label for="draw_amount">抽选数量</label>
+                <input id="draw_amount" type="number" step="1" style="width: 5rem;">
+            </div>
+            <div class="col-lg-6">
+                <input id="allow_repetition" type="checkbox">
+                <label for="allow_repetition">允许重复</label>
+                <input id="sort" type="checkbox">
+                <label for="sort">输出有序结果</label>
+            </div>
+        </div>
         <button id="draw_button" onclick="draw()"
                 class="btn btn-lg btn-block btn-primary">抽选
         </button>
@@ -85,7 +91,7 @@
         }
         let allow_repetition = $("#allow_repetition").is(":checked");
         let do_sort = $("#sort").is(":checked");
-        if((MAX_VALUE - MIN_VALUE + 1 < draw_amt) && !allow_repetition){
+        if ((MAX_VALUE - MIN_VALUE + 1 < draw_amt) && !allow_repetition) {
             alert("需要抽选过多不重复的结果，请检查设置");
             return;
         }
@@ -141,7 +147,7 @@
     function getExplanation(number) {
         let phrase = "";
         explanations.forEach(function (dict) {
-            if(number>=dict.min&&number<=dict.max) {
+            if (number >= dict.min && number <= dict.max) {
                 phrase += dict.description;
                 phrase += "; "
             }
