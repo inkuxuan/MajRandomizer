@@ -1,0 +1,37 @@
+explanations = [
+    {
+        min:0,
+        max:0,
+        description:"小白牌桌游一份"
+    },
+    {
+        min:1,
+        max:1,
+        description:"赠送10连抽"
+    },
+    {
+        min:2,
+        max:9,
+        description:"USB灯管一份"
+    },
+    {
+        min:10,
+        max:29,
+        description:"1元现金红包"
+    },
+    {
+        min:30,
+        max:49,
+        description:"真心话大冒险券一枚（仅可对负分玩家使用）（请提出无伤大雅等级的要求）"
+    },
+    {
+        min:50,
+        max:95,
+        description:"有点非，建议洗把脸"
+    },
+    {
+        min:96,
+        max:100,
+        description:"大失败！您太非了！给大家表演个节目改改运吧（不强求）"
+    },
+];

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闷声抽大奖</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <style>
+        .col-center-block {
+            float: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1 class="display-3">闷声抽大奖</h1>
+</div>
+<!--<div class="row">-->
+<!--<div class="m-auto">-->
+<div class="card m-5">
+    <div class="card-header">
+        <h4 class="card-title">配置</h4>
+    </div>
+    <div class="card-body">
+        <label for="draw_amount">抽选数量</label>
+        <input id="draw_amount" type="number" step="1" style="width: 5rem;">
+        <input id="allow_repetition" type="checkbox">
+        <label for="allow_repetition">允许重复</label>
+        <input id="sort" type="checkbox">
+        <label for="sort">输出有序结果</label>
+        <button id="draw_button" onclick="draw()"
+                class="btn btn-lg btn-block btn-primary">抽选
+        </button>
+    </div>
+</div>
+<!--</div>-->
+<!--</div>-->
+<div class="card bg-dark text-white m-5">
+    <div class="card-header">
+        <h4 class="card-title">抽选</h4>
+    </div>
+    <div id="draw_result" class="card-body">
+        请配置抽选选项
+        <table class="table text-white">
+            <tr>
+                <td>30</td>
+                <td>示例结果</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>示例结果</td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td>示例结果</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="explanations.js"></script>
+
+<script>
+    const MIN_VALUE = 0;
+    const MAX_VALUE = 100;
+
+    let result_set = [];
+
+    function draw() {
+        result_set = [];
+        let draw_amt = parseInt($("#draw_amount").val());
+        if (isNaN(draw_amt)) {
+            alert("抽选数量无效");
+            return;
+        }
+        let allow_repetition = $("#allow_repetition").is(":checked");
+        let do_sort = $("#sort").is(":checked");
+        if((MAX_VALUE - MIN_VALUE + 1 < draw_amt) && !allow_repetition){
+            alert("需要抽选过多不重复的结果，请检查设置");
+            return;
+        }
+
+        for (let i = 0; i < draw_amt; i++) {
+            insertRandomNumber(allow_repetition);
+        }
+
+        if (do_sort)
+            result_set.sort(function (a, b) {
+                return a - b;
+            });
+
+        let html = "<table class=\"table text-white\">";
+        result_set.forEach(number => {
+            html += "<tr>" +
+                "<td>" + number + "</td>" +
+                "<td>" + getExplanation(number) + "</td>"
+                + "</tr>"
+        });
+
+        $("#draw_result").html(html);
+    }
+
+    function insertRandomNumber(allow_repetition) {
+        let scale = MAX_VALUE - MIN_VALUE + 1;
+        let random = parseInt(Math.random() * scale + MIN_VALUE);
+        // let random = 0;
+        if (!allow_repetition) {
+            while (checkRepitition(random)) {
+                random = parseInt(Math.random() * scale + MIN_VALUE);
+                // let random = 0;
+            }
+        }
+        result_set.push(random);
+    }
+
+    /**
+     * returns true if already exists
+     * @param number
+     */
+    function checkRepitition(number) {
+        var flag = false;
+        result_set.forEach(function (element) {
+            if (element == number) {
+                flag = true;
+                return;
+            }
+        });
+        return flag;
+    }
+
+    function getExplanation(number) {
+        let phrase = "";
+        explanations.forEach(function (dict) {
+            if(number>=dict.min&&number<=dict.max) {
+                phrase += dict.description;
+                phrase += "; "
+            }
+        });
+        return phrase;
+    }
+</script>
+
+</body>
+</html>
