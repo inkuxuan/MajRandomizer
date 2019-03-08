@@ -12,12 +12,72 @@ explanations = [
         stock: 1,
     },
     {
-        description: "USB灯管一份",
-        stock: 8,
+        description: "均贫卡，指定一个人你们的点数平分（请立即使用）",
+        stock: 1,
     },
     {
-        description: "1元现金红包",
-        stock: 20,
+        description: "优先吃饭卷",
+        stock: 5,
+    },
+    {
+        description: "优先洗澡卷",
+        stock: 5,
+    },
+    {
+        description: "免费卡（抵消一次你的游戏扣分）",
+        stock: 10,
+    },
+    {
+        description: "苏打杯",
+        stock: 1,
+    },
+    {
+        description: "崩崩崩扇子",
+        stock: 1,
+    },
+    {
+        description: "崩崩崩文件夹",
+        stock: 1,
+    },
+    {
+        description: "砍口累明信片一套",
+        stock: 1,
+    },
+    {
+        description: "非人哉九月徽章",
+        stock: 1,
+    },
+    {
+        description: "抹茶燕麦巧克力一盒",
+        stock: 1,
+    },
+    {
+        description: "小猫羊毛毡挂饰一只",
+        stock: 1,
+    },
+    {
+        description: "索尼克钥匙扣1只",
+        stock: 4,
+    },
+    {
+        description: "索尼克零钱包1只",
+        stock: 1,
+    },
+    {
+        description: "自选卡贴7种9张",
+        stock: 9,
+    },
+    {
+        description: "自选吧唧5个",
+        stock: 5,
+    },
+	{
+        description: "ポプテピピック鼠标垫",
+        stock: 1,
+    },
+    {
+        description: "USB灯管一份",
+        stock: 8,
     },
     {
         description: "真心话大冒险券一枚（仅可对负分玩家使用）（请提出无伤大雅等级的要求）",
