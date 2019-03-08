@@ -25,9 +25,9 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col-lg-2 m-auto">
-				<label for="draw_amount">抽选数量</label>
+				<label for="draw_amount" class="col-form-label">抽选数量</label>
 				<input id="draw_amount" type="number" step="1" value="10"
-				       style="width: 5rem;">
+				       class="form-control d-inline" style="width: 5rem;">
 			</div>
 			<div class="col-lg-2 m-auto">
 				<input id="do_not_decrease" type="checkbox">
@@ -78,6 +78,28 @@
 	</div>
 </div>
 
+<div class="card bg-danger text-white m-3">
+	<div class="card-header">
+		<h4 class="card-title">调试</h4>
+	</div>
+	<div class="card-body">
+		<div class="form-group">
+			<input class="form-control d-inline m-auto" style="width: calc(100% - 10rem)" id="console_input"
+			       type="text">
+			<button onclick="submitConsole()" class="btn btn-warning d-inline m-auto">提交</button>
+		</div>
+		<textarea class="form-control" disabled id="console_out" name="console_out" cols="30" rows="1">
+		</textarea>
+	</div>
+	<div class="card-body">
+		<button class="btn btn-info" onclick="retrieveJson()">获取JSON</button>
+		<button class="btn btn-danger" onclick="saveJson()">保存JSON</button>
+		<br>
+		<textarea class="form-control" id="json" name="console_out" cols="30" rows="10">
+		</textarea>
+	</div>
+</div>
+
 <div class="modal fade" id="stockModal">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -108,7 +130,7 @@
 
 			<!-- 模态框头部 -->
 			<div class="modal-header">
-				<h4 class="modal-title">帮助</h4>
+				<h4 class="modal-title">闷声抽大奖(v2.7.0)帮助</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
@@ -118,7 +140,7 @@
 				<h3>基本描述</h3>
 				<p>本工具为静态页面，初始的奖品信息保存在
 					<span class="text-primary">explanations.js</span>，您可以根据实际情况修改此文件</p>
-				<h3>自定义奖品</h3>
+				<h3>自定义奖品(仅开发人员)</h3>
 				<p>使用在线托管服务时，您可能无法直接更改此文件，此时您可以使用浏览器调试台的
 					<span class="text-primary">localStorage</span>中的
 					<span class="text-primary">explanations</span>项（您可自行创建），以JSON数组格式保存奖品信息</p>
@@ -131,11 +153,13 @@
     }
 ]</pre>
 				</blockquote>
+				<p>您也可以使用本工具末尾自带的调试工具进行奖品编辑</p>
 				<p>请留意
 					<button class="btn btn-danger">复位库存</button>
 					按钮将会使您本地存储的商品信息清空，从而重新使用
 					<span class="text-primary">explanations.js</span>，因此上述情况
-					<span class="text-danger">请不要使用</span>"复位库存"功能</p>
+					<span class="text-danger">请不要使用</span>"复位库存"功能
+				</p>
 				<h3>本地存储</h3>
 				<p>每一次抽奖造成的库存变化都会保存在
 					<span class="text-primary">localStorage</span>中的
@@ -148,7 +172,7 @@
 				<h3>小功能</h3>
 				<p><strong>调试模式</strong>勾选时，抽奖并不会影响库存，可用于测试</p>
 				<p><strong>输出有序结果</strong>勾选时，同一个奖品将会被排序在一起</p>
-
+				<p><strong>调试台</strong>您可以在此使用简易的console，以及获取和保存奖品的JSON（自动保存至localStorage）</p>
 			</div>
 
 			<!-- 模态框底部 -->
@@ -163,6 +187,11 @@
 <script src="explanations.js"></script>
 
 <script>
+
+    String.prototype.replaceAll = function (s1, s2) {
+        return this.replace(new RegExp(s1, "gm"), s2);
+    };
+
     let result_set = [];
     let do_not_decrease = false;
 
@@ -175,7 +204,7 @@
     }
 
     //弹出帮助
-    if(localStorage.getItem("first")!="false") {
+    if (localStorage.getItem("first") != "false") {
         $("#infoModal").modal("show");
         localStorage.setItem("first", "false");
     }
@@ -216,10 +245,13 @@
 
         //生成表格，处理库存
         let html = generateResultHtmlAndDecreaseStock(result_set);
-
+        saveExplanationsToLS()
         $("#draw_result").html(html);
-        localStorage.setItem("explanations", JSON.stringify(explanations));
         confChanged(false);
+    }
+
+    function saveExplanationsToLS() {
+        localStorage.setItem("explanations", JSON.stringify(explanations));
     }
 
     function generateResultHtmlAndDecreaseStock(items) {
@@ -315,6 +347,29 @@
             alert.removeClass("show");
             alert.addClass("hide");
         }
+    }
+
+    function submitConsole() {
+        let script = $("#console_input").val();
+        let out = $("#console_out");
+        out.val(
+            out.val() + "\n" + eval(script)
+        );
+        out.attr("rows", (parseInt(out.attr("rows")) + 1));
+    }
+
+    function retrieveJson() {
+        $("#json").val(JSON.stringify(explanations)
+            .replaceAll("\\},", "},\n")
+            .replaceAll("\\[", "[\n")
+            .replaceAll("\\]", "\n]"));
+    }
+
+    function saveJson() {
+        let json = $("#json").val();
+        explanations = JSON.parse(json.replaceAll("\n", ""));
+		saveExplanationsToLS();
+		alert("保存成功");
     }
 
     $(document).ready(function () {
