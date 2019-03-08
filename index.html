@@ -22,7 +22,7 @@
 	<div class="card-header">
 		<h4 class="card-title">配置</h4>
 	</div>
-	<div class="card-body">
+	<div id="conf_div" class="card-body">
 		<div class="row">
 			<div class="col-lg-2 m-auto">
 				<label for="draw_amount" class="col-form-label">抽选数量</label>
@@ -84,8 +84,8 @@
 	</div>
 	<div class="card-body">
 		<div class="form-group">
-			<input class="form-control d-inline m-auto" style="width: calc(100% - 10rem)" id="console_input"
-			       type="text">
+			<input class="form-control d-inline m-auto" style="width: calc(100% - 10rem)"
+			       id="console_input" type="text">
 			<button onclick="submitConsole()" class="btn btn-warning d-inline m-auto">提交</button>
 		</div>
 		<textarea class="form-control" disabled id="console_out" name="console_out" cols="30" rows="1">
@@ -382,8 +382,12 @@
     }
 
     $(document).ready(function () {
-        $("input").on("change", function () {
+        $("#conf_div > input").on("change", function () {
             confChanged(true);
+        });
+        $("#console_input").keyup(function (e) {
+            if(e.keyCode===13)
+                submitConsole();
         });
     });
 </script>
