@@ -130,7 +130,7 @@
 
 			<!-- 模态框头部 -->
 			<div class="modal-header">
-				<h4 class="modal-title">闷声抽大奖(v2.7.0)帮助</h4>
+				<h4 class="modal-title">闷声抽大奖(v2.7.1)帮助</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
@@ -352,6 +352,15 @@
     function submitConsole() {
         let script = $("#console_input").val();
         let out = $("#console_out");
+        if(script === "clear"){
+            out.val("");
+            out.attr("rows", 1);
+            return;
+        }
+        if(script === "larger"){
+            out.attr("rows", (parseInt(out.attr("rows")) + 5));
+            return;
+        }
         out.val(
             out.val() + "\n" + eval(script)
         );
