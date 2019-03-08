@@ -1,9 +1,5 @@
 explanations = [
     {
-        description:"奖品描述",
-        stock: 0, //初始库存
-    },
-    {
         description: "小白牌桌游一份",
         stock: 1,
     },
@@ -16,15 +12,15 @@ explanations = [
         stock: 1,
     },
     {
-        description: "优先吃饭卷",
+        description: "优先吃饭券（每人仅1张有效）",
         stock: 5,
     },
     {
-        description: "优先洗澡卷",
+        description: "优先洗澡券（每人仅1张有效）",
         stock: 5,
     },
     {
-        description: "免费卡（抵消一次你的游戏扣分）",
+        description: "免费卡（可用于免除未来一次游戏的扣分）",
         stock: 10,
     },
     {
@@ -73,6 +69,10 @@ explanations = [
     },
 	{
         description: "ポプテピピック鼠标垫",
+        stock: 1,
+    },
+    {
+        description: "艦コレ文件夹一个",
         stock: 1,
     },
     {
