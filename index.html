@@ -351,19 +351,26 @@
 
     function submitConsole() {
         let script = $("#console_input").val();
+        $("#console_input").val("");
         let out = $("#console_out");
-        if(script === "clear"){
+        if (script === "clear") {
             out.val("");
             out.attr("rows", 1);
             return;
         }
-        if(script === "larger"){
+        if (script === "larger") {
             out.attr("rows", (parseInt(out.attr("rows")) + 5));
             return;
         }
-        out.val(
-            out.val() + "\n" + eval(script)
-        );
+        try {
+            out.val(
+                out.val() + "\n" + eval(script)
+            );
+        } catch (err) {
+            out.val(
+                out.val() + "\n" + err
+            );
+        }
         out.attr("rows", (parseInt(out.attr("rows")) + 1));
     }
 
@@ -377,8 +384,8 @@
     function saveJson() {
         let json = $("#json").val();
         explanations = JSON.parse(json.replaceAll("\n", ""));
-		saveExplanationsToLS();
-		alert("保存成功");
+        saveExplanationsToLS();
+        alert("保存成功");
     }
 
     $(document).ready(function () {
@@ -386,7 +393,7 @@
             confChanged(true);
         });
         $("#console_input").keyup(function (e) {
-            if(e.keyCode===13)
+            if (e.keyCode === 13)
                 submitConsole();
         });
     });
