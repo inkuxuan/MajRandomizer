@@ -60,11 +60,11 @@ explanations = [
         stock: 1,
     },
     {
-        description: "自选卡贴7种9张",
+        description: "自选卡贴7种9张（选1）",
         stock: 9,
     },
     {
-        description: "自选吧唧5个",
+        description: "自选吧唧5个（选1）",
         stock: 5,
     },
 	{
