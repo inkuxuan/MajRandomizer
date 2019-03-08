@@ -62,7 +62,7 @@
 	<strong>注意!</strong> 自变更设置后您还未进行抽选。
 </div>
 
-<div class="card bg-dark text-white m-3">
+<div class="card bg-dark text-white m-3" id="result_div">
 	<div class="card-header">
 		<h4 class="card-title">抽选</h4>
 	</div>
@@ -245,9 +245,12 @@
 
         //生成表格，处理库存
         let html = generateResultHtmlAndDecreaseStock(result_set);
-        saveExplanationsToLS()
+        saveExplanationsToLS();
         $("#draw_result").html(html);
         confChanged(false);
+        $("html, body").animate({
+            scrollTop: $("#result_div").offset().top,
+        }, 300);
     }
 
     function saveExplanationsToLS() {
@@ -389,7 +392,7 @@
     }
 
     $(document).ready(function () {
-        $("#conf_div > input").on("change", function () {
+        $("#conf_div input").on("change", function () {
             confChanged(true);
         });
         $("#console_input").keyup(function (e) {
